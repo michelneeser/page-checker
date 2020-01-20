@@ -1,0 +1,7 @@
+[
+  {
+    "url": "https://github.com/michelneeser",
+    "selector": ".vcard-fullname",
+    "textToCheck": "Michel Neeser"
+  }
+]
