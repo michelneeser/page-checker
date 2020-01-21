@@ -1,7 +1,14 @@
 [
   {
+    "name": "GitHub (check specific DOM element)",
     "url": "https://github.com/michelneeser",
     "selector": ".vcard-fullname",
+    "textToCheck": "Michel Neeser"
+  },
+  {
+    "name": "GitHub (check entire page by leaving the selector empty)",
+    "url": "https://github.com/michelneeser",
+    "selector": "",
     "textToCheck": "Michel Neeser"
   }
 ]
