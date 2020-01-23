@@ -5,18 +5,20 @@ const check = require('./app.js');
 var aws = require('aws-sdk');
 var ses = new aws.SES({ region: 'eu-central-1' });
 
-exports.handler = async (event, context) => {
+exports.handler = async () => {
 
   const results = await check();
 
-  let mailText = "";
+  let mailText = '';
   results.forEach(result => {
-    mailText += `${result}\n`;
+    mailText += `${result}\n\n`;
   });
+
+  const receiver = 'aws@michelneeser.ch';
 
   var mailParams = {
     Destination: {
-      ToAddresses: ["aws@michelneeser.ch"]
+      ToAddresses: [receiver]
     },
     Message: {
       Body: {
@@ -28,19 +30,17 @@ exports.handler = async (event, context) => {
         Data: "Page Checker"
       }
     },
-    Source: "aws@michelneeser.ch"
+    Source: receiver,
+    ReturnPath: receiver
   };
 
-
-  ses.sendEmail(mailParams, function (err, data) {
-    if (err) {
-      console.log(err);
-      context.fail(err);
-    } else {
-      console.log(data);
-      context.succeed(event);
-    }
-  });
+  console.log(`sending email to ${receiver}...`);
+  try {
+    await ses.sendEmail(mailParams).promise();
+    console.log(`email sent!`);
+  } catch (err) {
+    console.log(err);
+  }
 
   return results;
 };
