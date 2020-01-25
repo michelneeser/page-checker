@@ -1,5 +1,5 @@
 {
-  "remoteConfigUrl": "",
+  "remoteConfigUrl": "[absolute URL to remote config goes here (the checks config below will be ignored if set)]",
   "checks": [
     {
       "name": "GitHub (check specific DOM element)",

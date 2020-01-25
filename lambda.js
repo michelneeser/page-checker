@@ -1,13 +1,13 @@
 // entry point for AWS Lambda
 
-const check = require('./app.js');
+const executeChecks = require('./app.js');
 
 var aws = require('aws-sdk');
 var ses = new aws.SES({ region: 'eu-central-1' });
 
 exports.handler = async () => {
 
-  const results = await check();
+  const results = await executeChecks();
 
   let mailText = '';
   results.forEach(result => {
@@ -34,8 +34,8 @@ exports.handler = async () => {
     ReturnPath: receiver
   };
 
-  console.log(`sending email to ${receiver}...`);
   try {
+    console.log(`sending email to ${receiver}...`);
     await ses.sendEmail(mailParams).promise();
     console.log(`email sent!`);
   } catch (err) {
